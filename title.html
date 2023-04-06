@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: hsl(240, 32%, 11%);
+        }
+        
+        .title {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(0.2rem, 4vw, 3rem);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #fffafa;
+            padding: 0 clamp(1rem, 2vw, 3rem);
+            border-radius: 10px;
+            filter: brightness(1.3);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+
+
+    <script>
+        function getRandomItem(arr) {
+
+            const randomIndex = Math.floor(Math.random() * arr.length);
+            const item = arr[randomIndex];
+            return item;
+        }
+
+        const randomNRX = ["Vero", "Raro", "Puro", "Duro", "Assai", "Folle"]
+
+        const h1 = document.createElement("h1");
+        h1.classList.add("title");
+        h1.setAttribute("translate", "no");
+        h1.setAttribute("data-value", `${getRandomItem(randomNRX)}     `);
+        h1.textContent = "Neologismi RX";
+        document.body.appendChild(h1);
+
+
+
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let interval = null;
+
+        document.querySelector('.title').onmousedown = (event) => {
+            let iteration = 0;
+            h1.style.animation = "none"
+
+            clearInterval(interval);
+
+            interval = setInterval(() => {
+                event.target.innerText = event.target.innerText
+                    .split('')
+                    .map((letter, index) => {
+                        if (index < iteration) {
+                            return event.target.dataset.value[index];
+                        }
+                        return letters[Math.floor(Math.random() * 26)];
+                    })
+                    .join('');
+                if (iteration >= event.target.dataset.value.length) {
+                    clearInterval(interval);
+
+                }
+
+                iteration += 1 / 5;
+            }, 50);
+
+
+
+            h1.textContent = "Neologismi RX";
+
+            h1.setAttribute("data-value", `${getRandomItem(randomNRX)}     `);
+
+
+        };
+
+
+        setInterval(() => {
+            h1.style.animation = "fadeIn 2s linear"
+            h1.textContent = "Neologismi RX      ";
+
+        }, 10000);
+    </script>
+
+</body>
+
+
+
+</html>
